@@ -1,0 +1,22 @@
+body {
+  background-color: #F8F8F8;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.2em;
+  margin: 15px;
+}
+
+h1, p {
+  color: #333;
+}
+
+ul#quiz_choices {
+  list-style: none;
+}
+
+ul#quiz_choices li {
+  line-height: 2;
+  width: 150px;
+  border: thin solid #DCDCDC;
+}

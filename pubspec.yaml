@@ -1,0 +1,9 @@
+name: simple_quiz
+description: A sample command-line or client application
+
+dependencies:
+  browser: any
+  js: any
+
+dev_dependencies:
+  unittest: any
