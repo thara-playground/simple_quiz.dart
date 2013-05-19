@@ -4,7 +4,7 @@ class QuizMaster {
   
   final List<Quiz> _quizzes;
   
-  QuizPresenter _quizPresenter;
+  final QuizPresenter _quizPresenter;
   
   Iterator<QuizEntry> _quizIter;
   
@@ -26,11 +26,7 @@ class QuizMaster {
     this._quizSubscription = _quizStreamController.stream.listen(null);
   }
   
-  void beginQuiz() {
-    _proposeNextQuiz();
-  }
-  
-  void prepareAnswerBy(StreamSubscription<String> answerAction) {
+  void beginQuiz(StreamSubscription<String> answerAction) {
     
     _quizSubscription.onData((QuizEntry quizEntry) {
       _quizPresenter.showQuiz(quizEntry);
@@ -48,7 +44,7 @@ class QuizMaster {
           
           _answeredQuiz.add(quizEntry);
           
-          _proposeNextQuiz(handleNoLeftQuiz : () {
+          _proposeNextQuiz(handleQuizFinished : () {
             answerAction.cancel();
             _quizStreamController.close();
           });
@@ -64,13 +60,16 @@ class QuizMaster {
       
       _quizPresenter.showResults(this._answeredQuiz);
     });
+    
+    // start quiz.
+    _proposeNextQuiz();
   }
   
-  void _proposeNextQuiz({void handleNoLeftQuiz()}) {
+  void _proposeNextQuiz({void handleQuizFinished()}) {
     if (_quizIter.moveNext()) {
       _quizStreamController.add(_quizIter.current);
-    } else if (?handleNoLeftQuiz) {
-      handleNoLeftQuiz();
+    } else if (?handleQuizFinished) {
+      handleQuizFinished();
     }
   }
 }

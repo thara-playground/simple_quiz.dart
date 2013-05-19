@@ -26,9 +26,8 @@ void main() {
   
   var stream = delegateOnClick("input[name='selected_answer']")
                 .transform(new SelectedAnswerTransformer());
-  quizMaster.prepareAnswerBy(stream.listen(null));
   
-  quizMaster.beginQuiz();
+  quizMaster.beginQuiz(stream.listen(null));
 }
 
 class SelectedAnswerTransformer extends StreamEventTransformer<MouseEvent, String> {

@@ -25,9 +25,7 @@ void main() {
                   .transform(new LineTransformer());
   var userInteraction = cmdLine.listen(null);
   
-  quizMaster.prepareAnswerBy(userInteraction);
-  
-  quizMaster.beginQuiz();
+  quizMaster.beginQuiz(userInteraction);
 }
 
 class ConsoleQuizPresenter extends QuizPresenter {
