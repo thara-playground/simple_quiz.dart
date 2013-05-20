@@ -6,17 +6,22 @@ class Quiz {
   final Answer correctAnswer;
   final List<Answer> incorrectAnswers;
   
-  Quiz(Question q)
-    : this.sentence = q.sentence,
-      this.correctAnswer = new Answer(q.correctAnswer),
-      this.incorrectAnswers = q.incorrectAnswers.map((s) => new Answer(s)).toList() {
-      
-      if (this.incorrectAnswers.contains(this.correctAnswer)) throw new ArgumentError();      
-    }
+  Quiz._(this.sentence, this.correctAnswer, this.incorrectAnswers);
+  
+  factory Quiz(Question q) {
+    var sentence = q.sentence;
+    var correctAnswer = new Answer(q.correctAnswer);
+    var incorrectAnswers = q.incorrectAnswers.map((s) => new Answer(s)).toList();
+    
+    if (incorrectAnswers.contains(correctAnswer)) throw new ArgumentError();
+    
+    return new Quiz._(sentence, correctAnswer, incorrectAnswers);
+  }
   
   List<Answer> getChoices() {
     var choices = [correctAnswer]..addAll(incorrectAnswers);
     
+    // shuffle choices.
     void swap(int from, int to) {
       var temp = choices[from];
       choices[from] = choices[to];

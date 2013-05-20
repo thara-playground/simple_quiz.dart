@@ -43,11 +43,7 @@ class QuizMaster {
         if (quizEntry.isAnswered()) {
           
           _answeredQuiz.add(quizEntry);
-          
-          _proposeNextQuiz(handleQuizFinished : () {
-            answerAction.cancel();
-            _quizStreamController.close();
-          });
+          _proposeNextQuiz(handleQuizFinished : answerAction.cancel);
           
         } else {
           // retry answer
@@ -57,7 +53,6 @@ class QuizMaster {
     });
     
     _quizSubscription.onDone(() {
-      
       _quizPresenter.showResults(this._answeredQuiz);
     });
     
@@ -70,6 +65,7 @@ class QuizMaster {
       _quizStreamController.add(_quizIter.current);
     } else if (?handleQuizFinished) {
       handleQuizFinished();
+      _quizStreamController.close();
     }
   }
 }
